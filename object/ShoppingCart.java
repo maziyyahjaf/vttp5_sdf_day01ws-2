@@ -2,6 +2,8 @@ package object;
 
 import java.io.Console;
 import java.util.*;
+import java.io.File;
+import java.io.IOException;
 
 public class ShoppingCart {
 
@@ -26,6 +28,7 @@ public class ShoppingCart {
         System.out.println("Welcome to your shopping cart!");
         System.out.println("*********************************");
         System.out.println();
+        System.out.println("Input login to login to account");
         System.out.println("Input list for a list of items in your cart");
         System.out.println("Input add to add more items to the list");
         System.out.println("Input delete to remove items from the list ");
@@ -35,7 +38,7 @@ public class ShoppingCart {
 
     }
 
-    public void userInput() {
+    public void userInput() throws IOException {
 
         Console console = System.console();
         String keyboardInput = "";
@@ -63,6 +66,14 @@ public class ShoppingCart {
                 list();
 
             }
+
+            if (keyboardInput.startsWith("login")){
+                login();
+            }
+
+            // if (keyboardInput.startsWith("directory")){
+            //     directory();
+            // }
             
             
         }
@@ -137,6 +148,70 @@ public class ShoppingCart {
             System.out.println("No items in cart");
 
         }
+
+    }
+
+    public String directory() throws IOException {
+
+        // Scanner scan = new Scanner(keyboardInput.substring(9));
+        // String dirPath = scan.next();
+        
+        Console con1 = System.console();
+        String dirPath = con1.readLine("Enter directory: ");
+
+
+
+        File directory = new File(dirPath);
+        if (directory.exists()) {
+            System.out.println("Directory " + directory.toString() + " is already created.");
+        } else {
+            directory.mkdir();
+        }
+        // String user;
+
+        // user = login();
+
+        // String dirPathFileName = dirPath + File.separator + user;
+        // System.out.println(dirPathFileName);
+
+        // File file = new File(dirPathFileName);
+
+        // if (file.exists()) {
+        //     System.out.println("File " + file.toString() + " had already been created");
+        // } else {
+        //     file.createNewFile();
+        // }
+
+        // scan.close();
+
+        return dirPath;
+
+    }
+
+
+    public void login() throws IOException {
+
+        Console con1 = System.console();
+        //Scanner scan = new Scanner(keyboardInput.substring(5));
+        String user = con1.readLine("Enter username: ");
+        //String user = scan.next();
+
+        String dirPath;
+        dirPath = directory();
+
+        String dirPathFileName = dirPath + File.separator + user;
+        System.out.println(dirPathFileName);
+        
+        File file = new File(dirPathFileName);
+
+        if (file.exists()) {
+            System.out.println("User " + file.toString() + " already exists.");
+        } else {
+            file.createNewFile();
+        }
+
+        // scan.close();
+
 
     }
     
