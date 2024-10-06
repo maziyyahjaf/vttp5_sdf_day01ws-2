@@ -32,6 +32,7 @@ public class ShoppingCart {
         System.out.println("Input list for a list of items in your cart");
         System.out.println("Input add to add more items to the list");
         System.out.println("Input delete to remove items from the list ");
+        System.out.println("Input users to list registered accounts");
         System.out.println("Input quit to quit shopping cart");
         // String keyboardInput = "";
         // keyboardInput = console.readLine(">>>");
@@ -44,7 +45,7 @@ public class ShoppingCart {
         String keyboardInput = "";
         keyboardInput = keyboardInput.toLowerCase();
         
-        while (!keyboardInput.equals("quit")) {   // keyboardInput.toLowerCase() != "quit"
+        while (!keyboardInput.equals("quit")) {   // keyboardInput.toLowerCase() != "quit" ?
             menu(); 
             
             keyboardInput = console.readLine(">>> ");
@@ -71,9 +72,9 @@ public class ShoppingCart {
                 login();
             }
 
-            // if (keyboardInput.startsWith("directory")){
-            //     directory();
-            // }
+            if (keyboardInput.startsWith("users")){
+                users();
+            }
             
             
         }
@@ -189,7 +190,7 @@ public class ShoppingCart {
     }
 
 
-    public void login() throws IOException {
+    public File login() throws IOException {
 
         Console con1 = System.console();
         //Scanner scan = new Scanner(keyboardInput.substring(5));
@@ -203,7 +204,6 @@ public class ShoppingCart {
         System.out.println(dirPathFileName);
         
         File file = new File(dirPathFileName);
-
         if (file.exists()) {
             System.out.println("User " + file.toString() + " already exists.");
         } else {
@@ -212,6 +212,42 @@ public class ShoppingCart {
 
         // scan.close();
 
+        return file;
+
+
+    }
+
+    public void users() throws IOException {
+
+        
+        // List<String> results = new ArrayList<String>();
+
+        // File file;
+        // file = login(); ->this will go to the each file level. To list files in the directory, should point to the directory
+
+        String dirPath;
+        dirPath = directory();
+
+
+        File folder = new File(dirPath);
+        File[] listOfFiles = folder.listFiles();
+
+        if(listOfFiles != null) {
+            for (int i = 0; i <listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    System.out.printf("%d. %s\r\n", i+1, listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    System.out.println("Directory " + listOfFiles[i].getName());
+                }
+            }
+        }
+
+        // for (File f : listOfFiles) {
+        //     if (f.isFile()){
+        //         results.add(f.getName());
+        //     }
+        // }
+        // System.out.println(results);
 
     }
     
